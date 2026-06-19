@@ -1,0 +1,4 @@
+# shellcheck shell=bash
+root="$(git rev-parse --show-toplevel)"
+terraform -chdir="${root}/terraform/configs/repository" init
+terraform -chdir="${root}/terraform/configs/repository" apply -auto-approve

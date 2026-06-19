@@ -8,8 +8,8 @@ on:
         required: true
 
 jobs:
-  apply:
-    name: Apply Terraform
+  apply-repository:
+    name: Apply Terraform (repository)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,11 +18,26 @@ jobs:
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Terraform Apply
-        run: |
-          cd terraform
-          terraform init
-          terraform apply -auto-approve
+      - name: Terraform Apply (repository)
+        run: nix --print-build-logs run --file . terraform.modules.repository.apply
         env:
           TF_VAR_cloudflare_api_token: ${{ secrets.CF_API_TOKEN }}
+          TF_VAR_cloudflare_account_id: ${{ vars.CF_ACCOUNT_ID }}
           TF_VAR_github_token: ${{ secrets.GITHUB_TOKEN_TERRAFORM }}
+
+  apply-book:
+    name: Apply Terraform (book)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/install-nix
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Terraform Apply (book)
+        run: nix --print-build-logs run --file . terraform.modules.book.apply
+        env:
+          TF_VAR_cloudflare_api_token: ${{ secrets.CF_API_TOKEN }}
+          TF_VAR_cloudflare_account_id: ${{ vars.CF_ACCOUNT_ID }}
+          TF_VAR_cloudflare_zone_id: ${{ vars.CF_ZONE_ID }}

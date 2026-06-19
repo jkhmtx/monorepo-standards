@@ -11,7 +11,7 @@ jobs:
       - uses: ./.github/actions/install-nix
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - run: nix --print-build-logs run --file . all.format-nix
+      - run: nix --print-build-logs run --file . root.format-nix
       - run: git diff --exit-code
 
   format-sh:
@@ -22,7 +22,7 @@ jobs:
       - uses: ./.github/actions/install-nix
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - run: nix --print-build-logs run --file . all.format-sh
+      - run: nix --print-build-logs run --file . root.format-sh
       - run: git diff --exit-code
 
   lint-yaml:
@@ -33,7 +33,7 @@ jobs:
       - uses: ./.github/actions/install-nix
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - run: nix --print-build-logs run --file . all.lint-yaml
+      - run: nix --print-build-logs run --file . root.lint-yaml
 
   lint-gh-actions:
     name: Lint GitHub Actions
@@ -43,7 +43,7 @@ jobs:
       - uses: ./.github/actions/install-nix
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - run: nix --print-build-logs run --file . all.lint-gh-actions
+      - run: nix --print-build-logs run --file . root.lint-gh-actions
 
   lint-md:
     name: Lint Markdown
@@ -53,7 +53,7 @@ jobs:
       - uses: ./.github/actions/install-nix
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - run: nix --print-build-logs run --file . all.lint-md
+      - run: nix --print-build-logs run --file . root.lint-md
 
   check-generated-files:
     name: Check Generated Files
@@ -63,7 +63,7 @@ jobs:
       - uses: ./.github/actions/install-nix
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - run: nix --print-build-logs run --file . all.check-generated-files
+      - run: nix --print-build-logs run --file . root.check-generated-files
 
   format-ts:
     name: Format TypeScript
@@ -78,7 +78,7 @@ jobs:
       - uses: ./.github/actions/install-nix
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - run: nix --print-build-logs run --file . all.format-ts
+      - run: nix --print-build-logs run --file . root.format-ts
       - run: git diff --exit-code
 
   lint-ts:
@@ -94,14 +94,24 @@ jobs:
       - uses: ./.github/actions/install-nix
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - run: nix --print-build-logs run --file . all.lint-ts
+      - run: nix --print-build-logs run --file . root.lint-ts
 
-  validate-terraform:
-    name: Validate Terraform
+  validate-terraform-repository:
+    name: Validate Terraform (repository)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/install-nix
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - run: nix --print-build-logs run --file . all.terraform.validate
+      - run: nix --print-build-logs run --file . terraform.modules.repository.validate
+
+  validate-terraform-book:
+    name: Validate Terraform (book)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install-nix
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: nix --print-build-logs run --file . terraform.modules.book.validate
