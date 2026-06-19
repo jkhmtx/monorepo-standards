@@ -1,0 +1,11 @@
+name: PR
+on:
+  pull_request:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+jobs:
+  test_global:
+    name: Global
+    uses: ./.github/workflows/test__global.yml
+    secrets: inherit

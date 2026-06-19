@@ -1,0 +1,13 @@
+name: Main - CD
+on:
+  push:
+    branches:
+      - main
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  test_global:
+    name: Global
+    uses: ./.github/workflows/test__global.yml
+    secrets: inherit

@@ -1,0 +1,66 @@
+name: Test - global
+on:
+  workflow_call:
+
+jobs:
+  format-nix:
+    name: Format Nix
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install-nix
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: nix --print-build-logs run --file . all.format-nix
+      - run: git diff --exit-code
+
+  format-sh:
+    name: Format Shell
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install-nix
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: nix --print-build-logs run --file . all.format-sh
+      - run: git diff --exit-code
+
+  lint-yaml:
+    name: Lint YAML
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install-nix
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: nix --print-build-logs run --file . all.lint-yaml
+
+  lint-gh-actions:
+    name: Lint GitHub Actions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install-nix
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: nix --print-build-logs run --file . all.lint-gh-actions
+
+  lint-md:
+    name: Lint Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install-nix
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: nix --print-build-logs run --file . all.lint-md
+
+  check-generated-files:
+    name: Check Generated Files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install-nix
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: nix --print-build-logs run --file . all.check-generated-files

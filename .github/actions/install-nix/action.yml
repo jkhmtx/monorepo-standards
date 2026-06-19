@@ -1,0 +1,18 @@
+name: Install Nix
+description: Install Nix and configure binary caching
+inputs:
+  github_access_token:
+    description: GitHub token for cache access
+    required: true
+runs:
+  using: composite
+  steps:
+    - uses: cachix/install-nix-action@v31
+      with:
+        github_access_token: ${{ inputs.github_access_token }}
+
+    - uses: DeterminateSystems/magic-nix-cache-action@v14
+      with:
+        diagnostic-endpoint: ""
+        use-flakehub: false
+        use-gha-cache: true
