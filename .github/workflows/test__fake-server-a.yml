@@ -1,0 +1,34 @@
+name: Test - fake-server-a
+on:
+  workflow_call:
+
+jobs:
+  type-check:
+    name: Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+      - run: yarn install --immutable
+      - uses: ./.github/actions/install-nix
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: nix --print-build-logs run --file . fake-server-a.type-check
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+      - run: yarn install --immutable
+      - uses: ./.github/actions/install-nix
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: nix --print-build-logs run --file . fake-server-a.test

@@ -3,6 +3,7 @@
   "private": true,
   "workspaces": ["apps/*"],
   "devDependencies": {
+    "@biomejs/biome": "^1.8.0",
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0"
   }

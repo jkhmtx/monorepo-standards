@@ -20,6 +20,11 @@ nixpkgs.writeShellApplication {
     _.all.lint-gh-actions
     _.all.lint-md
     _.all.lint-yaml
+    _.all.check
+    _.all.format-ts
+    _.all.lint-ts
+    _."fake-server-a".check
+    _."fake-server-b".check
   ];
   text = builtins.readFile ./hook.sh;
 }
