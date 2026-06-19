@@ -2,5 +2,4 @@
 node_modules/
 result
 result-*
-apps/fake-server-a/dist/
-apps/fake-server-b/dist/
+apps/book/book/

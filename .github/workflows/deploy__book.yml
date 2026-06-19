@@ -1,0 +1,29 @@
+name: Deploy - book
+on:
+  workflow_call:
+    secrets:
+      CF_API_TOKEN:
+        required: true
+      CF_ACCOUNT_ID:
+        required: true
+
+jobs:
+  deploy:
+    name: Deploy mdBook to Cloudflare Pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/install-nix
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build mdBook
+        run: nix --print-build-logs run --file . book.build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: pages deploy apps/book/book --project-name=monorepo-standards --branch=main

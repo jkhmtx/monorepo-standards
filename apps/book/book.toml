@@ -1,0 +1,11 @@
+[book]
+title = "Monorepo Standards"
+authors = ["Jake Hamilton"]
+language = "en"
+multilingual = false
+src = "src"
+
+[output.html]
+site-url = "/monorepo-standards/"
+git-repository-url = "https://github.com/jakehamilton/monorepo-standards"
+edit-url-template = "https://github.com/jakehamilton/monorepo-standards/edit/main/apps/book/{path}"

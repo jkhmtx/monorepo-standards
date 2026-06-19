@@ -12,24 +12,8 @@ jobs:
     uses: ./.github/workflows/test__global.yml
     secrets: inherit
 
-  test_fake_server_a:
-    name: fake-server-a
-    uses: ./.github/workflows/test__fake-server-a.yml
-    secrets: inherit
-
-  test_fake_server_b:
-    name: fake-server-b
-    uses: ./.github/workflows/test__fake-server-b.yml
-    secrets: inherit
-
-  build_fake_server_a:
-    name: Build fake-server-a
-    needs: [test_fake_server_a]
-    uses: ./.github/workflows/build__fake-server-a.yml
-    secrets: inherit
-
-  build_fake_server_b:
-    name: Build fake-server-b
-    needs: [test_fake_server_b]
-    uses: ./.github/workflows/build__fake-server-b.yml
+  deploy_book:
+    name: Book
+    needs: [test_global]
+    uses: ./.github/workflows/deploy__book.yml
     secrets: inherit
