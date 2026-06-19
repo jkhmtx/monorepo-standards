@@ -1,0 +1,2 @@
+cloudflare_api_token = "your-cf-api-token"
+github_token         = "your-github-token"

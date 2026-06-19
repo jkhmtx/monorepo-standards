@@ -95,3 +95,13 @@ jobs:
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - run: nix --print-build-logs run --file . all.lint-ts
+
+  validate-terraform:
+    name: Validate Terraform
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install-nix
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: nix --print-build-logs run --file . all.terraform.validate

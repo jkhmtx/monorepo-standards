@@ -3,3 +3,9 @@ node_modules/
 result
 result-*
 apps/book/book/
+apps/fake-server-a/dist/
+apps/fake-server-b/dist/
+terraform/terraform.tfvars
+terraform/.terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
